@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HudderFoods</title>
+  <link rel="icon" href="logo_ico.png" type="image/png">
+  <link rel="stylesheet" href="without_session_navbar.css">
+  <link rel="stylesheet" href="footer.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+
+<!-- Static Navbar -->
+<nav>
+  <ul>
+    <li><a href="#">Home</a></li>
+    <li><a href="#category-section">Categories</a></li>
+    <li><a href="#review">Reviews</a></li>
+    <li><a href="#">Login</a></li>
+  </ul>
+</nav>
+
+<!-- Static Slider Section -->
+<section class="home" id="home">
+  <div class="background-image"></div>
+  <div class="swiper-container home-slider">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide slide" style="background-image: url('charcuterie_banner.jpg');">
+        <div class="content"><a href="#category-section" class="btn">Shop Now</a></div>
+      </div>
+      <div class="swiper-slide slide" style="background-image: url('bakery_banner.jpeg');">
+        <div class="content"><a href="#category-section" class="btn">Shop Now</a></div>
+      </div>
+      <div class="swiper-slide slide" style="background-image: url('fruit_banner.jpg');">
+        <div class="content"><a href="#category-section" class="btn">Shop Now</a></div>
+      </div>
+    </div>
+    <div class="swiper-pagination"></div>
+  </div>
+</section>
+
+<!-- Static Category Section -->
+<section class="category-section" id="category-section">
+  <h2>CATEGORIES</h2>
+  <div class="category-container">
+    <div class="category-item">
+      <img src="category_picture/fruit.jpg" alt="Fruits">
+      <p>Fruits</p>
+    </div>
+    <div class="category-item">
+      <img src="category_picture/bakery.jpg" alt="Bakery">
+      <p>Bakery</p>
+    </div>
+    <div class="category-item">
+      <img src="category_picture/meat.jpg" alt="Meat">
+      <p>Meat</p>
+    </div>
+    <div class="category-item">
+      <img src="category_picture/dairy.jpg" alt="Dairy">
+      <p>Dairy</p>
+    </div>
+  </div>
+</section>
+
+<!-- Static Review Section -->
+<section class="review" id="review">
+  <h1 class="heading">Give Review On Your Purchase</h1>
+  <div class="swiper-container review-slider">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide slide">
+        <div class="profile-container">
+          <div class="profile">
+            <img src="product_image/sample_product.jpg" alt="Sample Product" class="profile-image">
+            <div class="profile-info">
+              <h2 class="profile-name">Apple</h2>
+            </div>
+          </div>
+          <div class="review-form">
+            <form action="#" method="post">
+              <label for="rating">Rating:</label>
+              <select id="rating" name="rating">
+                <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+              </select>
+              <label for="review">Review:</label>
+              <textarea id="review" name="review" placeholder="Write your review here..."></textarea>
+              <button type="submit">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="swiper-slide slide">
+        <div class="profile-container">
+          <div class="profile">
+            <img src="product_image/sample_product2.jpg" alt="Sample Product 2" class="profile-image">
+            <div class="profile-info">
+              <h2 class="profile-name">Bread</h2>
+            </div>
+          </div>
+          <div class="review-form">
+            <form action="#" method="post">
+              <label for="rating2">Rating:</label>
+              <select id="rating2" name="rating2">
+                <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+              </select>
+              <label for="review2">Review:</label>
+              <textarea id="review2" name="review2" placeholder="Write your review here..."></textarea>
+              <button type="submit">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <p>&copy; 2025 HudderFoods. All rights reserved.</p>
+</footer>
+
+<!-- Swiper JS -->
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+<!-- Swiper Config -->
+<script>
+  var swiper = new Swiper('.home-slider', {
+    loop: true,
+    autoplay: { delay: 3000 },
+    pagination: { el: '.swiper-pagination' }
+  });
+
+  var reviewSwiper = new Swiper('.review-slider', {
+    loop: true,
+    pagination: { el: '.swiper-pagination' }
+  });
+</script>
+
+</body>
+</html>

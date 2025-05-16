@@ -1,0 +1,92 @@
+body {
+    
+    /* Lighter background for softer appearance */
+       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Clean font style */
+       padding: 25px;
+       background-color: #f8f9f7;
+   }
+   h1{
+       text-align: left;
+   }
+   .about .row {
+       display: flex;
+       flex-wrap: wrap;
+       gap: 2rem; /* Increased gap for better spacing */
+       align-items: center;
+       margin: 10px 10px 10px 10px; /* Streamlined margin notation */
+   }
+   
+   .about .row .image {
+       flex: 1 1 20rem; /* Slightly larger base size for images */
+   }
+   
+   .about .row .image img { 
+       width: 100%;
+       border-radius: 8px; /* Rounded corners for images */
+   }
+   
+   .about .row .content {
+       flex: 1 1 40rem; /* Adjust content area size */
+       padding: 20px; /* Padding for content area */
+   }
+   
+   .about .row .content h3 {
+       color: #333; /* Dark grey for better readability */
+       font-size: 2.5rem; /* Smaller font size for headings */
+       margin-bottom: 0.5rem; /* Space below heading */
+   }
+   
+   .about .row .content p {
+       color: #666; /* Dark grey for paragraph */
+       font-size: 1.2rem; /* Larger font size for readability */
+       line-height: 1.6; /* Improved line spacing */
+   }
+   
+   .about .row .content .icons-container {
+       display: flex;
+       gap: 2rem; /* Larger gap between icons */
+       flex-wrap: wrap;
+   }
+   
+   .about .row .content .icons-container .icons {
+       background: #fff; /* White background for icons */
+       box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+       padding: 1.2rem 1rem; /* Adjusted padding */
+       transition: all 0.3s ease; /* Smooth transition for hover effects */
+        border-radius: 8px; /* Rounded corners for icons */
+       cursor: pointer; /* Change cursor to pointer on hover */
+   }
+   
+   
+   .about .row .content .icons-container .icons:hover {
+       transform: translateY(-5px); /* Move icons up slightly on hover */
+       box-shadow: 0 6px 12px rgba(0,0,0,0.2); /* Increase shadow on hover for depth */
+   }
+   
+   
+   .about .row .content .icons-container .icons i {
+       font-size: 3rem; /* Larger icons */
+       color: #4CAF50; /* Soft green color */
+   }
+   
+   .about .row .content .icons-container .icons span {
+       font-size: 1.4rem; /* Readjusted font size for consistency */
+       color: #333; /* Matching text color */
+   }
+   
+   .sub-heading {
+       color: #4CAF50; /* Consistent use of soft green */
+       font-size: 1.8rem; /* Adjusted for balance */
+   }
+   
+   .heading {
+       color: #333; /* Dark grey for main headings */
+       font-size: 2.5rem; /* Larger for impact */
+       text-transform: capitalize; /* Less aggressive than uppercase */
+   }
+   
+   
+   
+   
+   
+   
