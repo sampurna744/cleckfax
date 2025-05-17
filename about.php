@@ -22,7 +22,9 @@ try {
 
     // Fetch trader data
     $sql = "SELECT 
-                u.FIRST_NAME || ' ' || u.LAST_NAME AS NAME, 
+                u.USER_ID,
+                s.SHOP_NAME,
+                u.FIRST_NAME || ' ' || u.LAST_NAME AS TRADER_NAME,
                 u.USER_PROFILE_PICTURE,
                 s.SHOP_DESCRIPTION
             FROM 
@@ -308,22 +310,39 @@ try {
     </div>
     <div id="navbarMenu" class="navbar-menu">
       <div class="navbar-start">
-        <a class="navbar-item nav-link" href="productlisting.php">Shop</a>
-        <a class="navbar-item nav-link is-active" href="aboutus.php">About Us</a>
-        <a class="navbar-item nav-link" href="productlisting.php">Products</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">Shop</a>
+          <div class="navbar-dropdown">
+            <?php foreach ($trader_shop as $trader): ?>
+              <a class="navbar-item" href="shop_page.php?trader_id=<?php echo $trader['USER_ID']; ?>">
+                <?php echo htmlspecialchars($trader['SHOP_NAME']); ?>
+              </a>
+            <?php endforeach; ?>
+          </div>
+        </div>
+        <a class="navbar-item nav-link" href="about.php">About Us</a>
+        <a class="navbar-item nav-link" href="search_page.php?category=0&value=">Products</a>
       </div>
       <div class="navbar-end">
         <div class="navbar-item">
-          <input class="input" type="text" placeholder="Search products...">
+          <form action="search_page.php" method="GET">
+            <input class="input" type="text" name="value" placeholder="Search products...">
+          </form>
         </div>
         <div class="navbar-item">
-          <a class="button is-light" href="#">
+          <a class="button is-light" href="cart.php">
             <span class="icon"><i class="fas fa-shopping-cart"></i></span>
             <span>Cart (0)</span>
           </a>
         </div>
         <div class="navbar-item">
-          <a class="button is-primary" href="login.php">Login</a>
+          <?php 
+          $user_id = isset($_SESSION["userid"]) ? $_SESSION["userid"] : 0;
+          if ($user_id > 0): ?>
+            <a class="button is-primary" href="logout.php">Logout</a>
+          <?php else: ?>
+            <a class="button is-primary" href="login.php">Login</a>
+          <?php endif; ?>
         </div>
         <div class="navbar-item">
           <a class="button is-success" href="traderregister.php">Become a trader</a>
@@ -331,7 +350,6 @@ try {
       </div>
     </div>
   </nav>
-
   <!-- About Us Page -->
   <section class="page about-us-page active" id="about-us-page">
     <div class="container">
@@ -366,16 +384,16 @@ try {
           <?php foreach ($trader_shop as $shop): ?>
             <div class="trader-card">
               <div class="image-placeholder">
-                <img src="profile_image/<?php echo $shop['USER_PROFILE_PICTURE']; ?>" alt="<?php echo $shop['NAME']; ?>">
+                <img src="profile_image/<?php echo $shop['USER_PROFILE_PICTURE']; ?>" alt="<?php echo htmlspecialchars($shop['TRADER_NAME']); ?>">
               </div>
-              <h3><?php echo $shop['NAME']; ?></h3>
+              <h3><?php echo htmlspecialchars($shop['TRADER_NAME']); ?></h3>
               <p>Trader</p>
-              <p><?php echo $shop['SHOP_DESCRIPTION']; ?></p>
+              <p><?php echo htmlspecialchars($shop['SHOP_DESCRIPTION']); ?></p>
               <div class="social-icons">
-                <a href="https://www.facebook.com/<?php echo strtolower(str_replace(' ', '.', $shop['NAME'])); ?>" target="_blank" aria-label="Facebook">
+                <a href="https://www.facebook.com/<?php echo strtolower(str_replace(' ', '.', $shop['TRADER_NAME'])); ?>" target="_blank" aria-label="Facebook">
                   <i class="fab fa-facebook-f"></i>
                 </a>
-                <a href="https://www.linkedin.com/in/<?php echo strtolower(str_replace(' ', '-', $shop['NAME'])); ?>" target="_blank" aria-label="LinkedIn">
+                <a href="https://www.linkedin.com/in/<?php echo strtolower(str_replace(' ', '-', $shop['TRADER_NAME'])); ?>" target="_blank" aria-label="LinkedIn">
                   <i class="fab fa-linkedin-in"></i>
                 </a>
               </div>

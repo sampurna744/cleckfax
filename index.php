@@ -125,10 +125,12 @@ try {
         $selected_indices = [$selected_indices];
     }
 
-    // Fetch trader information (same as About Us page)
+    // Fetch trader information
     $trader_shop = [];
     $sql = "SELECT 
-                u.FIRST_NAME || ' ' || u.LAST_NAME AS NAME, 
+                u.USER_ID,
+                s.SHOP_NAME, 
+                u.FIRST_NAME || ' ' || u.LAST_NAME AS TRADER_NAME,
                 u.USER_PROFILE_PICTURE,
                 s.SHOP_DESCRIPTION
             FROM 
@@ -140,7 +142,6 @@ try {
     $stmt = oci_parse($conn, $sql);
     oci_execute($stmt);
     while ($row = oci_fetch_assoc($stmt)) {
-        // Truncate description to 10 words
         $description = $row['SHOP_DESCRIPTION'];
         $words = explode(' ', trim($description));
         $row['SHOP_DESCRIPTION'] = implode(' ', array_slice($words, 0, 10));
@@ -168,10 +169,29 @@ try {
         body {
             background-color: #f0f8ff;
         }
+        .navbar-item.nav-link {
+            position: relative;
+        }
+        .navbar-item.nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #48c774;
+            transition: width 0.3s ease;
+        }
+        .navbar-item.nav-link:hover::after {
+            width: 100%;
+        }
+        .navbar-item.nav-link:hover {
+            color: #48c774 !important;
+        }
         .slider-hero {
             background: url('1111.jpg') center center no-repeat;
             background-size: cover;
-            }
+        }
         .circle-img {
             width: 128px;
             height: 128px;
@@ -194,7 +214,7 @@ try {
             border: none;
             color: #4a4a4a;
             cursor: pointer;
-            font-size: 1.2rem;
+            font-size: 1rem;
             padding: 0.5rem;
             transition: transform 0.2s ease, color 0.2s ease;
         }
@@ -204,7 +224,6 @@ try {
         .heart-icon.active {
             color: #ff3860;
         }
-        /* Trader Card Styles from About Us */
         .traders-grid {
             display: flex;
             justify-content: center;
@@ -254,7 +273,6 @@ try {
         .trader-card .social-icons a:hover {
             color: #3273dc;
         }
-        /* Responsive Adjustments */
         @media (max-width: 768px) {
             .traders-grid {
                 flex-direction: column;
@@ -282,13 +300,24 @@ try {
         </div>
         <div id="navbarMenu" class="navbar-menu">
             <div class="navbar-start">
-                <a class="navbar-item nav-link" href="productlisting.php">Shop</a>
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link">Shop</a>
+                    <div class="navbar-dropdown">
+                        <?php foreach ($trader_shop as $trader): ?>
+                            <a class="navbar-item" href="shop_page.php?trader_id=<?php echo $trader['USER_ID']; ?>">
+                                <?php echo htmlspecialchars($trader['SHOP_NAME']); ?>
+                            </a>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
                 <a class="navbar-item nav-link" href="about.php">About Us</a>
-                <a class="navbar-item nav-link" href="productlisting.php">Products</a>
+                <a class="navbar-item nav-link" href="search_page.php?category=0&value=">Products</a>
             </div>
             <div class="navbar-end">
                 <div class="navbar-item">
-                    <input class="input" type="text" placeholder="Search products...">
+                    <form action="search_page.php" method="GET">
+                        <input class="input" type="text" name="value" placeholder="Search products...">
+                    </form>
                 </div>
                 <div class="navbar-item">
                     <a class="button is-light" href="cart.php">
@@ -297,7 +326,11 @@ try {
                     </a>
                 </div>
                 <div class="navbar-item">
-                    <a class="button is-primary" href="login.php">Login</a>
+                    <?php if ($user_id > 0): ?>
+                        <a class="button is-primary" href="logout.php">Logout</a>
+                    <?php else: ?>
+                        <a class="button is-primary" href="login.php">Login</a>
+                    <?php endif; ?>
                 </div>
                 <div class="navbar-item">
                     <a class="button is-success" href="traderregister.php">Become a trader</a>
@@ -316,7 +349,7 @@ try {
                 <p class="subtitle has-text-white">
                     Order by Tuesday midnight for pickup Wed-Fri
                 </p>
-                <a class="button is-light is-large" href="productlisting.php">Shop Now</a>
+                <a class="button is-light is-large" href="search_page.php?category=0&value=">Shop Now</a>
             </div>
         </div>
     </section>
@@ -332,7 +365,11 @@ try {
                             <img class="circle-img" src="category_picture/<?php echo $category['CATEGORY_IMAGE']; ?>" alt="<?php echo $category['CATEGORY_TYPE']; ?>">
                         </a>
                     </figure>
-                    <p class="mt-2"><?php echo $category['CATEGORY_TYPE']; ?></p>
+                    <p class="mt-2">
+                        <a href="search_page.php?category_id=<?php echo $category['CATEGORY_ID']; ?>&value=<?php echo urlencode(''); ?>">
+                            <?php echo $category['CATEGORY_TYPE']; ?>
+                        </a>
+                    </p>
                 </div>
             <?php endforeach; ?>
         </div>
@@ -346,20 +383,20 @@ try {
             foreach ($selected_indices as $index):
                 $product = $products_review[$index];
             ?>
-                <div class="column is-one-third">
+                <div class="column is-one-fifth">
                     <div class="card">
                         <div class="card-image">
-                            <a href="product.php?productId=<?php echo $product['PRODUCT_ID']; ?>">
+                            <a href="product_detail.php?productId=<?php echo $product['PRODUCT_ID']; ?>">
                                 <figure class="image is-4by3">
                                     <img src="product_image/<?php echo $product['PRODUCT_PICTURE']; ?>" alt="<?php echo $product['PRODUCT_NAME']; ?>">
                                 </figure>
                             </a>
                         </div>
                         <div class="card-content">
-                            <a href="product.php?productId=<?php echo $product['PRODUCT_ID']; ?>">
-                                <p class="title is-5"><?php echo $product['PRODUCT_NAME']; ?></p>
+                            <a href="product_detail.php?productId=<?php echo $product['PRODUCT_ID']; ?>">
+                                <p class="title is-6"><?php echo $product['PRODUCT_NAME']; ?></p>
                             </a>
-                            <p class="subtitle is-6">
+                            <p class="subtitle is-7">
                                 <?php
                                 $original_price = $product['PRODUCT_PRICE'];
                                 $discount_percent = $product['DISCOUNT_PERCENT'];
@@ -371,23 +408,22 @@ try {
                                     <span class="has-text-grey-light"><s>€<?php echo number_format($original_price, 2); ?></s></span>
                                 <?php endif; ?>
                             </p>
-                            <div class="product-rating">
-                                <span class="stars">
+                            <div class="content">
+                                <span class="icon-text">
                                     <?php
                                     $rating = round($product['AVG_REVIEW_SCORE']);
                                     for ($i = 0; $i < 5; $i++) {
-                                        if ($i < $rating) {
-                                            echo '★';
-                                        } else {
-                                            echo '☆';
-                                        }
+                                        echo '<span class="icon has-text-warning"><i class="fas fa-star' . ($i < $rating ? '' : '-o') . '"></i></span>';
                                     }
                                     ?>
+                                    <span>(<?php echo $product['TOTAL_REVIEWS']; ?>)</span>
                                 </span>
-                                <span class="total-reviews">(<?php echo number_format($product['TOTAL_REVIEWS']); ?>)</span>
                             </div>
                             <div class="product-actions">
-                                <a href="add_to_cart.php?productid=<?php echo $product['PRODUCT_ID']; ?>&userid=<?php echo $user_id; ?>&searchtext=<?php echo $searchText; ?>" class="button is-primary">Add to Cart</a>
+                                <a href="add_to_cart.php?productid=<?php echo $product['PRODUCT_ID']; ?>&userid=<?php echo $user_id; ?>&searchtext=<?php echo $searchText; ?>" class="button is-primary is-small">
+                                    <span class="icon"><i class="fas fa-shopping-cart"></i></span>
+                                    <span>Add to Cart</span>
+                                </a>
                                 <a href="add_to_wishlist.php?product_id=<?php echo $product['PRODUCT_ID']; ?>&user_id=<?php echo $user_id; ?>&searchtext=<?php echo $searchText; ?>" class="heart-icon"><i class="fas fa-heart"></i></a>
                             </div>
                         </div>
@@ -402,7 +438,7 @@ try {
         <div class="columns is-vcentered">
             <div class="column is-half has-text-centered">
                 <h2 class="title">UNLOCK LOCAL COMMUNITY EXCLUSIVE OFFER</h2>
-                <a class="button is-primary is-large" href="productlisting.php">Shop Now</a>
+                <a class="button is-primary is-large" href="search_page.php?category=0&value=">Shop Now</a>
             </div>
             <div class="column is-half">
                 <figure class="image">
@@ -427,14 +463,14 @@ try {
                 <div class="column is-one-fifth">
                     <div class="card">
                         <div class="card-image">
-                            <a href="product.php?productId=<?php echo $product['PRODUCT_ID']; ?>">
+                            <a href="product_detail.php?productId=<?php echo $product['PRODUCT_ID']; ?>">
                                 <figure class="image is-4by3">
                                     <img src="product_image/<?php echo $product['PRODUCT_PICTURE']; ?>" alt="<?php echo $product['PRODUCT_NAME']; ?>">
                                 </figure>
                             </a>
                         </div>
                         <div class="card-content">
-                            <a href="product.php?productId=<?php echo $product['PRODUCT_ID']; ?>">
+                            <a href="product_detail.php?productId=<?php echo $product['PRODUCT_ID']; ?>">
                                 <p class="title is-6"><?php echo $product['PRODUCT_NAME']; ?></p>
                             </a>
                             <p class="subtitle is-7">
@@ -449,8 +485,22 @@ try {
                                     <span class="has-text-grey-light"><s>€<?php echo number_format($original_price, 2); ?></s></span>
                                 <?php endif; ?>
                             </p>
+                            <div class="content">
+                                <span class="icon-text">
+                                    <?php
+                                    $rating = round($product['AVG_REVIEW_SCORE']);
+                                    for ($i = 0; $i < 5; $i++) {
+                                        echo '<span class="icon has-text-warning"><i class="fas fa-star' . ($i < $rating ? '' : '-o') . '"></i></span>';
+                                    }
+                                    ?>
+                                    <span>(<?php echo $product['TOTAL_REVIEWS']; ?>)</span>
+                                </span>
+                            </div>
                             <div class="product-actions">
-                                <a href="add_to_cart.php?productid=<?php echo $product['PRODUCT_ID']; ?>&userid=<?php echo $user_id; ?>&searchtext=<?php echo $searchText; ?>" class="button is-primary is-small">Add to Cart</a>
+                                <a href="add_to_cart.php?productid=<?php echo $product['PRODUCT_ID']; ?>&userid=<?php echo $user_id; ?>&searchtext=<?php echo $searchText; ?>" class="button is-primary is-small">
+                                    <span class="icon"><i class="fas fa-shopping-cart"></i></span>
+                                    <span>Add to Cart</span>
+                                </a>
                                 <a href="add_to_wishlist.php?product_id=<?php echo $product['PRODUCT_ID']; ?>&user_id=<?php echo $user_id; ?>&searchtext=<?php echo $searchText; ?>" class="heart-icon"><i class="fas fa-heart"></i></a>
                             </div>
                         </div>
@@ -468,16 +518,16 @@ try {
             <?php foreach ($trader_shop as $shop): ?>
                 <div class="trader-card">
                     <div class="image-placeholder">
-                        <img src="profile_image/<?php echo $shop['USER_PROFILE_PICTURE']; ?>" alt="<?php echo $shop['NAME']; ?>">
+                        <img src="profile_image/<?php echo $shop['USER_PROFILE_PICTURE']; ?>" alt="<?php echo htmlspecialchars($shop['TRADER_NAME']); ?>">
                     </div>
-                    <h3><?php echo $shop['NAME']; ?></h3>
+                    <h3><?php echo htmlspecialchars($shop['TRADER_NAME']); ?></h3>
                     <p>Trader</p>
-                    <p><?php echo $shop['SHOP_DESCRIPTION']; ?></p>
+                    <p><?php echo htmlspecialchars($shop['SHOP_DESCRIPTION']); ?></p>
                     <div class="social-icons">
-                        <a href="https://www.facebook.com/<?php echo strtolower(str_replace(' ', '.', $shop['NAME'])); ?>" target="_blank" aria-label="Facebook">
+                        <a href="https://www.facebook.com/<?php echo strtolower(str_replace(' ', '.', $shop['TRADER_NAME'])); ?>" target="_blank" aria-label="Facebook">
                             <i class="fab fa-facebook-f"></i>
                         </a>
-                        <a href="https://www.linkedin.com/in/<?php echo strtolower(str_replace(' ', '-', $shop['NAME'])); ?>" target="_blank" aria-label="LinkedIn">
+                        <a href="https://www.linkedin.com/in/<?php echo strtolower(str_replace(' ', '-', $shop['TRADER_NAME'])); ?>" target="_blank" aria-label="LinkedIn">
                             <i class="fab fa-linkedin-in"></i>
                         </a>
                     </div>
@@ -485,9 +535,6 @@ try {
             <?php endforeach; ?>
         </div>
     </section>
-
-
-
 
     <!-- Footer Section -->
     <footer class="footer">
@@ -603,10 +650,6 @@ try {
             alert('Message sent successfully!');
             e.target.reset();
         });
-
-        function redirectToProductPage(productId) {
-            window.location.href = "product.php?productId=" + productId;
-        }
     </script>
 </body>
 </html>
