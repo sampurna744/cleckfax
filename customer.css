@@ -1,0 +1,540 @@
+/* General styles */
+.profile-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px;
+    max-width: 90%; /* Adjust this value as needed to make the container smaller */
+    margin: 0 auto; /* Centers the container horizontally */
+
+}
+
+
+.left-side {
+    flex: 1;
+    padding-right: 20px;
+    border-right: 2px solid #ccc; /* Add a border to separate from right side */
+    height: 100%;
+}
+
+.right-side {
+    flex: 2;
+    margin-left: 5px;
+}
+
+.profile-picture {
+    margin-left: 20px;
+    margin-bottom: 10px; /* Add some space between picture and button */
+    text-align: center; /* Add this line */
+}
+
+.profile-picture img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 2px solid #ccc; /* Add border to profile picture */
+}
+
+/* Style for the upload button */
+.update-profile-btn {
+    padding: 5px 10px;
+    background-color: #627754;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Add transition effect */
+    margin-left: auto; /* Add this line */
+    margin-right: auto; /* Add this line */
+    display: block; /* Add this line */ 
+}
+
+.update-profile-btn:hover {
+    background-color: #46563c;
+    transform: scale(1.05); /* Add zoom in effect on hover */
+}
+
+.navigation {
+    margin-top: 30px;
+    margin-left: 20px;
+}
+
+.nav-btn {
+    display: block;
+    margin-bottom: 10px;
+    border: none; /* Continue to remove the border */
+    border-radius: 5px; /* Subtle rounded corners for a modern look */
+    padding: 10px 15px; /* Reduced padding for a smaller button */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition for interactive feedback */
+    background-color: #627754; /* Professional muted green */
+    width: auto; /* Adjust width to content for a more compact look */
+    color: white; /* High contrast for readability */
+    font-size: 0.9rem; /* Slightly smaller font size */
+    font-weight: bold; /* Bold text to make the buttons stand out */
+    text-transform: uppercase; /* Uppercase text for a more structured appearance */
+    letter-spacing: 0.05em; /* Adding letter-spacing to improve readability of uppercase text */
+    max-width: 200px; /* Max width can limit the button size for very wide containers */
+    margin-left: auto; /* Center the button horizontally if not full width */
+    margin-right: auto;
+}
+
+
+
+.nav-btn.active {
+    background-color: #627754;
+}
+
+.nav-btn:hover {
+    background-color: #46563c;
+    transform: scale(1.05); /* Add zoom in effect on hover */
+}
+
+.personal-info {
+    padding: 20px;
+    background-color: #f0f3ee;
+}
+
+.personal-info h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.form-row {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.input-group {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font: bold;
+}
+
+.input-group input,
+.input-group select {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: transparent;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.3s ease;
+}
+
+.input-group input:focus,
+.input-group select:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+.save-btn,
+.delete-account-btn {
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+    margin-left: 30px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+}
+
+.save-btn {
+    background-color: #1E90FF;
+}
+
+.save-btn:hover {
+    background-color: #1C86EE; /* Slightly darker blue on hover */
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); /* Deeper shadow on hover */
+    transform: translateY(-2px); /* Slight lift on hover */
+}
+
+.save-btn:active {
+    background-color: #1A7FDB; /* Even darker blue on click */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Return to original shadow on click */
+    transform: translateY(0); /* Remove lift on click */
+}
+
+.delete-account-btn {
+    background-color: #B22222;
+}
+
+.delete-account-btn:hover {
+    background-color: #A52A2A; /* Slightly darker red on hover */
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); /* Deeper shadow on hover */
+    transform: translateY(-2px); /* Slight lift on hover */
+}
+
+.delete-account-btn:active {
+    background-color: #8B0000; /* Even darker red on click */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Return to original shadow on click */
+    transform: translateY(0); /* Remove lift on click */
+}
+
+
+
+
+/* Hide the dummy tables by default */
+.my-orders-table,
+.my-reviews-table {
+    display: none;
+}
+
+.my-orders-table h2,
+.my-reviews-table h2 {
+    text-align: center;
+}
+
+/* Style for the dummy tables */
+.my-orders-table table,
+.my-reviews-table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.my-orders-table table th,
+.my-reviews-table table th,
+.my-orders-table table td,
+.my-reviews-table table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.my-orders-table table th,
+.my-reviews-table table th {
+    background-color: #CBD5C0;
+    font-weight: bold;
+    text-align: left;
+}
+
+
+
+/* Show the dummy tables when clicked */
+.my-orders.active,
+.my-reviews.active {
+    display: block;
+}
+
+/* Show the active content section */
+.active {
+    display: block !important;
+}
+
+
+/* Hide the personal information section by default */
+.personal-info {
+    display: none;
+}
+
+/* Show the personal information section when active */
+.nav-btn.active ~ .right-side .personal-info {
+    display: block;
+}
+
+
+
+
+
+/* Media query for smaller screens */
+@media only screen and (max-width: 768px) {
+    .profile-container {
+        flex-direction: column; /* Change to column layout for smaller screens */
+    }
+
+    .left-side {
+        order: 1; /* Move left side to the bottom */
+        border-right: none;
+        border-bottom: 2px solid #000000; /* Add a border to separate from right side */
+    }
+
+    .right-side {
+        order: 2; /* Move right side to the top */
+        margin-top: 20px;
+
+    }
+
+    left-side {
+        display: flex;
+        align-items: center;
+    }
+    
+    .profile-picture {
+        margin-right: 10px; /* Add some spacing between profile picture and button */
+    }
+    
+    .navigation {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px; /* Add gap between buttons */
+    }
+    
+    .nav-btn {
+        flex: 1; /* Make buttons fill the available space equally */
+    }
+}
+
+
+.table-controls {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center; /* Center vertically */
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+#rows-per-page {
+    margin-right: 10px;
+}
+
+#search {
+    margin-left: auto; /* Push to the right side */
+}
+
+.my-orders-table table,
+.my-reviews-table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.my-orders-table th,
+.my-reviews-table th {
+    background-color: rgba(0, 0, 0, 0.1); /* Light blur color */
+    text-align: center;
+}
+
+.my-orders-table td,
+.my-reviews-table td {
+    text-align: center;
+}
+
+.pagination {
+    bottom: 10px;
+    left: 10px; /* Align to the left side of the screen */
+    margin-top: 10px;
+}
+
+#prev-page,
+#next-page {
+    background-color: #007bff; /* Blue color */
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    margin-right: 5px;
+    transition: background-color 0.3s;
+}
+
+#prev-page:hover,
+#next-page:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+#order_table_length {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center; /* Center vertically */
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#order_table_fliter {
+    margin-left: auto; /* Push to the right side */
+    margin-bottom: 10px;
+
+}
+
+#order_table_info{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center; /* Center vertically */
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#order_table_paginate{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center; /* Center vertically */
+    margin-bottom: 10px;
+    margin-left: auto; /* Push to the right side */
+    margin-top: 10px;
+}
+
+
+
+#review_table_length {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center; /* Center vertically */
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#review_table_fliter {
+    margin-left: auto; /* Push to the right side */
+
+}
+
+#review_table_info{
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#review_table_paginate{
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+    margin-left: auto; /* Push to the right side */
+    margin-top: 10px;
+}
+
+/* Media query for mobile devices */
+@media (max-width: 768px) {
+    #order_table_paginate,
+    #order_table_info {
+        font-size: 9px; /* Decrease font size for mobile devices */
+        font-weight: bold; /* Set font weight to bold */
+    }
+
+    #order_table_filter > label > input[type=search]{
+        width: 70%;
+        font-size: 9px;
+        font-weight: bold;
+    }
+
+    #order_table_filter > label{
+        font-size: 9px;
+        font-weight: bold;
+    }
+
+    #order_table_length > label > select{
+        width: 45%;
+        font-size: 9px;
+        font-weight: bold;
+    }
+
+    #order_table_length > label{
+        font-size: 9px;
+        font-weight: bold;
+    }
+
+    /* Reset margins */
+    #order_table_paginate,
+    #order_table_info,
+    #order_table_filter,
+    #order_table_length {
+        margin: 0;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
+    /* Set flex direction for elements to display in a row */
+    #order_table_paginate,
+    #order_table_info,
+    #order_table_filter,
+    #order_table_length {
+        display:inline;
+    }
+
+    #order_table_paginate{
+        width: 60%;
+    }
+
+    #order_table_length{
+        float: inline-start;
+    }
+
+    #order_table_filter {
+        float: inline-end;
+    }
+
+    #order_table_info{
+        float: inline-start;
+    }
+
+    #order_table_paginate{
+        float: inline-end;
+    }
+
+    #review_table_paginate,
+    #review_table_info {
+        font-size: 9px; /* Decrease font size for mobile devices */
+        font-weight: bold; /* Set font weight to bold */
+    }
+
+    #review_table_filter > label > input[type=search]{
+        width: 70%;
+        font-size: 9px;
+        font-weight: bold;
+    }
+
+    #review_table_filter > label{
+        font-size: 9px;
+        font-weight: bold;
+    }
+
+    #review_table_length > label > select{
+        width: 45%;
+        font-size: 9px;
+        font-weight: bold;
+    }
+
+    #review_table_length > label{
+        font-size: 9px;
+        font-weight: bold;
+    }
+
+    /* Reset margins */
+    #review_table_paginate,
+    #review_table_info,
+    #review_table_filter,
+    #review_table_length {
+        margin: 0;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
+    /* Set flex direction for elements to display in a row */
+    #review_table_paginate,
+    #review_table_info,
+    #review_table_filter,
+    #review_table_length {
+        display:inline;
+    }
+
+    #review_table_paginate{
+        width: 60%;
+    }
+
+    #review_table_length{
+        float: inline-start;
+    }
+
+    #review_table_filter {
+        float: inline-end;
+    }
+
+    #review_table_info{
+        float: inline-start;
+    }
+
+    #review_table_paginate{
+        float: inline-end;
+    }
+
+}
